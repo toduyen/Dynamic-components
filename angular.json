@@ -1,0 +1,142 @@
+{
+  "version": 1,
+  "projects": {
+    "dynamic-components": {
+      "projectType": "application",
+      "root": "apps/dynamic-components",
+      "sourceRoot": "apps/dynamic-components/src",
+      "prefix": "dynamic-components",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/dynamic-components",
+            "index": "apps/dynamic-components/src/index.html",
+            "main": "apps/dynamic-components/src/main.ts",
+            "polyfills": "apps/dynamic-components/src/polyfills.ts",
+            "tsConfig": "apps/dynamic-components/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/dynamic-components/src/favicon.ico",
+              "apps/dynamic-components/src/assets",
+              "apps/dynamic-components/src/manifest.webmanifest"
+            ],
+            "styles": [
+              "apps/dynamic-components/src/styles.scss"
+            ],
+            "scripts": [],
+            "serviceWorker": true,
+            "ngswConfigPath": "apps/dynamic-components/ngsw-config.json"
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/dynamic-components/src/environments/environment.ts",
+                  "with": "apps/dynamic-components/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "dynamic-components:build:production"
+            },
+            "development": {
+              "browserTarget": "dynamic-components:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "dynamic-components:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/dynamic-components/src/**/*.ts",
+              "apps/dynamic-components/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/dynamic-components"
+          ],
+          "options": {
+            "jestConfig": "apps/dynamic-components/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "dynamic-components-e2e": {
+      "root": "apps/dynamic-components-e2e",
+      "sourceRoot": "apps/dynamic-components-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/dynamic-components-e2e/cypress.json",
+            "devServerTarget": "dynamic-components:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "dynamic-components:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": [
+            "{options.outputFile}"
+          ],
+          "options": {
+            "lintFilePatterns": [
+              "apps/dynamic-components-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      },
+      "tags": [],
+      "implicitDependencies": [
+        "dynamic-components"
+      ]
+    }
+  }
+}
